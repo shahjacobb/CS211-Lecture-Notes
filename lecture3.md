@@ -1,4 +1,4 @@
-# Lecture 4
+# 8 Queens Solution With Goto
 
 ## Setting the stage
 
@@ -21,14 +21,14 @@ int r = 0, c;
 Then we need to move to the next column as stated before, right? Since we successfully placed a queen in the first column. So we need to move to the __next column__, which will look like `c++` (next column). And remember, this consists of two loops: 1) an outer loop moving across colums and an inner loop iterating down the rows. 
 ```cpp
 
-c++; // next column (outer loop)
+nc: c++; 
 r = -1;
-
-r++;  // next row (inner loop)
+nr: r++; 
 
 ```
 Why tf is `r` being set to `-1`? The reason is that when the r++ increment happens, `r++` will add `1` to our variable, and since the index starts at 0 in cpp arrays, we have to set it with `-1`.
 
+But the __REAL__ reason is that let's say all 3 tests above 'pass' (in other words, all the if statements were false). If that's the case, we move end up triggering `go to nc`. Since we want start at the top again, we need to set r to 0 AFTER the `nc` label. (Tbh, I'm not sure on this one).
 ## What things do we have to satisfy
 - __The Row **Test__**
   - In the row test, we set the for loop conditions for `i = 0` (obviously), and `i < c`, and then `i++`. I know what you're thinking - wait, what? Why not `i--`? We're moving left-wards to check every column in that row, right? Well it doesn't matter if we're moving left or right.
@@ -37,11 +37,15 @@ Why tf is `r` being set to `-1`? The reason is that when the r++ increment happe
 - __The Up Diagonal Test__
   - If we failed the row test above (aka, `chessboard[r][i]==1`), then the program goes to go `goto nr`, where it moves down
 - __The Down Diagonal Test__
-  - d
-
+- T
 ```cpp
+
+nc: c++
+nr: r++
+// gdfgfdgdf missing if statement here 
+
 // row test
-nr: for (int i = 0; i < c; i++)
+for (int i = 0; i < c; i++)
 {
   if (chessboard[r][i] == 1)
   {
@@ -61,11 +65,33 @@ for int i = 0; (r-w) > -1 && (c-i) >> 1; i++)
   }   
 }
 
-// down diag test 
-```
-### `goto` statements
-ddd
+// down diag test
 
+for(int i = 0; ; i++)
+{
+  if(b[r+i][c-i) == 1)
+  {
+    goto nr;
+  }
+}
+
+```
+
+Once we're done doing all the tests, if all 3 if statements (because they're just if statements fail, we place a queen into the board at that position using `chessboard[r][c] == 1`.
+
+After that, we move on to the next row by making the compiler go to the `nr` label where it says `c++`.
+
+__One point of confusion__: `r` and `c` values are actually changing - remember that the `variable++` thing is just syntactic sugar for `variable = variable + 1`. In other words, ___the changes are stored in place___. 
+
+
+
+## What Next After The 3 Checks: Preventing an Infinite Loop
+Once we're done with that, keep in mind that there's only 8 rows on the board. So even if the program keeps successfully getting past the 3 checks, `goto nc` at the end of the checks before pretty much creates an infinite loop, and because `goto` statements are an unconditional jump, we'll need an if statement to make the program end. And that goes before `nr`.
+
+```cpp
+if (c ==)
+```
+d
 ```
 // some pseudocode for what it would look like
 
